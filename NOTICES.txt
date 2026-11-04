@@ -1,0 +1,13 @@
+Third-party software and fonts in this firmware
+===============================================
+
+- Arduino core for the ESP32 (Espressif): GNU Lesser General Public License 2.1.
+  The firmware is linked against it; on request the developer provides the object files
+  needed to relink the firmware with a modified version of the library (contact: LINE on the install page).
+- ESP-IDF (Espressif): Apache License 2.0.
+- LovyanGFX (lovyan03): FreeBSD license (includes parts under MIT / BSD licenses, see the library).
+- esptool-js (Espressif), used by the install page: Apache License 2.0 (mobile/esptool-js/LICENSE).
+- Fonts (drawn into the firmware as bitmaps): Orbitron, Exo 2, Chakra Petch, IBM Plex Sans Thai,
+  all under the SIL Open Font License 1.1.
+
+Pictures (the pet, scenes, map, icons) were made for this project.
