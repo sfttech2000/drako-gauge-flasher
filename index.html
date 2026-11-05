@@ -142,6 +142,7 @@ footer { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
     <p class="muted">มีโปรแกรมอื่นอยู่ในบอร์ดแล้ว ไม่อยากเสีย? <b>สำรองก่อน</b> แล้วค่อยลอง DRAKO GAUGE ไม่ชอบก็คืนเครื่องเดิมได้ทั้งหมด (โปรแกรม ค่าที่ตั้ง และสิทธิ์ใช้งานของบอร์ดนั้น)</p>
     <button class="btn ghost" id="backup" type="button">สำรองเครื่องเดิม (บันทึกเป็นไฟล์)</button>
     <label class="btn ghost" style="display:block;text-align:center;margin-top:8px;cursor:pointer">คืนเครื่องเดิมจากไฟล์สำรอง<input type="file" id="restore" accept=".bin" hidden></label>
+    <button class="btn" id="restorego" type="button" hidden style="margin-top:8px"></button>
     <div class="bar" aria-hidden="true" style="margin-top:12px"><div id="bbar"></div></div>
     <p id="bstatus" class="muted" style="font-weight:600">พร้อม</p>
     <div class="box tip">ใช้เวลาประมาณ 2–3 นาที อย่าถอดสาย · ไฟล์สำรองใช้คืนได้กับ<b>บอร์ดตัวเดิมเท่านั้น</b> (ชื่อไฟล์มีเลขบอร์ด) เก็บไฟล์ไว้ให้ดี</div>
@@ -363,7 +364,7 @@ async function openLoader(port, baud) {
 }
 const FLASH = 0x400000;  // the CYD's 4 MB
 // progress of the backup / restore, in its own section (so it never looks stuck)
-const bst = (t, cls = '') => { const e = $('bstatus'); e.textContent = t; e.className = cls || 'muted'; e.style.fontWeight = 600; status(t, cls); };
+const bst = (t, cls = '') => { const e = $('bstatus'); e.textContent = t; e.className = cls || 'muted'; e.style.fontWeight = 600; };  // (its own line: the install status stays as it was)
 const bprog = (what, done, total) => {
   const f = total ? done / total : 0;
   $('bbar').style.width = Math.round(f * 100) + '%';
@@ -417,24 +418,38 @@ $('backup').addEventListener('click', async () => {
   }
 });
 
-// put a backup back (the whole 4 MB, from address 0)
+// put a backup back (the whole 4 MB, from address 0). Two steps: choose the file, then a button press that asks
+// for the board first (the browser only shows its port list right after a press)
+let pending = null;  // { data, name }
 $('restore').addEventListener('change', async (ev) => {
   const f = ev.target.files[0];
   ev.target.value = '';
   if (!f) return;
   const data = new Uint8Array(await f.arrayBuffer());
   if (data.length !== FLASH) { bst('ไฟล์นี้ไม่ใช่ไฟล์สำรองทั้งเครื่อง (ต้องขนาด 4 MB)', 'bad'); return; }
-  if (!window.confirm('คืนเครื่องเดิมจาก ' + f.name + ' ? โปรแกรมที่อยู่ในบอร์ดตอนนี้ (รวมค่าที่ตั้ง) จะถูกแทนที่ทั้งหมด')) return;
+  pending = { data, name: f.name };
+  $('restorego').textContent = 'เริ่มคืนเครื่องจาก ' + f.name;
+  $('restorego').hidden = false;
+  bst('เลือกไฟล์แล้ว: กดปุ่ม "เริ่มคืนเครื่อง" แล้วเลือกบอร์ด');
+});
+$('restorego').addEventListener('click', async () => {
+  if (!pending) return;
+  const { data, name } = pending;
   const baud = parseInt($('baud').value, 10);
   let port = null, conn = null;
+  $('restorego').disabled = true;
   bar(0);
   logEl.textContent = '';
   try {
     bst('เลือกบอร์ด...');
-    port = await pickPort();
+    port = await pickPort();  // (first: right after the press)
+    if (!window.confirm('คืนเครื่องเดิมจาก ' + name + ' ? โปรแกรมที่อยู่ในบอร์ดตอนนี้ (รวมค่าที่ตั้ง) จะถูกแทนที่ทั้งหมด')) {
+      bst('ยกเลิกแล้ว');
+      return;
+    }
     bst('กำลังเชื่อมต่อบอร์ด... (ถ้าค้างนาน กดปุ่ม BOOT ที่บอร์ดค้างไว้)');
     conn = await openLoader(port, baud);
-    const m = f.name.match(/cyd-backup-([0-9a-f]{12})/i);
+    const m = name.match(/cyd-backup-([0-9a-f]{12})/i);
     if (m && m[1].toLowerCase() !== conn.mac.toLowerCase() &&
         !window.confirm('ไฟล์นี้สำรองจากบอร์ดอื่น (' + m[1] + ') ไม่ใช่บอร์ดนี้ (' + conn.mac + ') สิทธิ์ใช้งานอาจใช้ไม่ได้ ต่อไหม?')) {
       bst('ยกเลิกแล้ว');
@@ -446,12 +461,15 @@ $('restore').addEventListener('change', async (ev) => {
     bar(1);
     await conn.loader.after('hard_reset');
     bst('คืนเครื่องเดิมเสร็จแล้ว ถอดสายได้เลย', 'ok');
+    pending = null;
+    $('restorego').hidden = true;
   } catch (e) {
     console.error(e);
     log('ERROR: ' + (e && e.message ? e.message : e));
-    bst('คืนเครื่องไม่สำเร็จ: ' + (e && e.message ? e.message : e) + ' ลองใหม่ได้ ไฟล์สำรองยังอยู่', 'bad');
+    bst('คืนเครื่องไม่สำเร็จ: ' + (e && e.message ? e.message : e) + ' ลองกดปุ่มอีกครั้งได้ ไฟล์สำรองยังอยู่', 'bad');
   } finally {
     try { if (conn) await conn.transport.disconnect(); else if (port) await port.close(); } catch (e) { /* closed */ }
+    $('restorego').disabled = false;
   }
 });
 
