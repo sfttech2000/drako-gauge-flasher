@@ -7,7 +7,7 @@ Third-party software and fonts in this firmware
 - ESP-IDF (Espressif): Apache License 2.0.
 - LovyanGFX (lovyan03): FreeBSD license (includes parts under MIT / BSD licenses, see the library).
 - esptool-js (Espressif), used by the install page: Apache License 2.0 (mobile/esptool-js/LICENSE).
-- Fonts (drawn into the firmware as bitmaps): Orbitron, Exo 2, Chakra Petch, IBM Plex Sans Thai,
+- Fonts (drawn into the firmware as bitmaps): Barlow Semi Condensed, Orbitron, Exo 2, Chakra Petch, IBM Plex Sans Thai,
   all under the SIL Open Font License 1.1.
 
 Pictures (the pet, scenes, map, icons) were made for this project.

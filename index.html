@@ -91,7 +91,7 @@ footer { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
     <div class="tags"><span>เวอร์ชัน <b id="ver">…</b></span><span class="beta">ทดลองฟรี 15 กม.</span><span>ปลดล็อก 299 บาท</span><span>มังกรคู่ใจ</span><span>โค้ดเสียภาษาไทย</span><span>ราคาน้ำมันจริง</span></div>
   </header>
 
-  <div class="box warn"><b>ทดลองใช้ฟรี 15 กม.</b> (ขับจริง) จากนั้นปลดล็อก <b>299 บาท</b> ต่อบอร์ด ใช้ได้ตลอด: ส่งเลขเครื่อง <b>DKG-xxxxxx</b> จากหน้าล็อก (หรือ ≡ › จอ › รหัสปลดล็อก) มาทาง LINE ด้านล่าง ได้รหัส 6 หลัก · จดรหัสเก็บไว้ ลงใหม่/ล้างเครื่องใช้รหัสเดิม · ทดสอบกับ Honda Civic FC 2017 · <b>ห้ามดูหรือแตะจอระหว่างขับ</b> ตั้งค่าตอนจอด</div>
+  <div class="box warn"><b>หน้าเกจหลักใช้ฟรีตลอด</b> · ทุกอย่างลองฟรี 15 กม. (ขับจริง) จากนั้นปลดล็อก <b>299 บาท</b> ต่อบอร์ด เพื่อใช้ทุกหน้า มังกรคู่ใจ และฟังก์ชันมือถือ (ราคาน้ำมัน สภาพอากาศ เตือนลืมมือถือ) ใช้ได้ตลอด และได้สนับสนุนผู้พัฒนา: ส่งเลขเครื่อง <b>DKG-xxxxxx</b> จากรูปแม่กุญแจบนหน้าหลัก (หรือ ≡ › จอ › รหัสปลดล็อก) มาทาง LINE ด้านล่าง ได้รหัส 6 หลัก · จดรหัสเก็บไว้ ลงใหม่/ล้างเครื่องใช้รหัสเดิม · ทดสอบกับ Honda Civic FC 2017 · <b>ห้ามดูหรือแตะจอระหว่างขับ</b> ตั้งค่าตอนจอด</div>
 
   <div id="unsupported" class="box warn" hidden><b>เบราว์เซอร์นี้ใช้ไม่ได้</b><br>เปิดหน้านี้ด้วย Google Chrome หรือ Microsoft Edge บนคอม หรือ Chrome บนมือถือ Android · iPhone และ iPad ใช้ไม่ได้ (Apple ไม่เปิดให้เว็บใช้พอร์ต USB)</div>
 
@@ -138,13 +138,24 @@ footer { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
   </section>
 
   <section class="card">
+    <h2>สำรองเครื่องเดิม / คืนเครื่องเดิม</h2>
+    <p class="muted">มีโปรแกรมอื่นอยู่ในบอร์ดแล้ว ไม่อยากเสีย? <b>สำรองก่อน</b> แล้วค่อยลอง DRAKO GAUGE ไม่ชอบก็คืนเครื่องเดิมได้ทั้งหมด (โปรแกรม ค่าที่ตั้ง และสิทธิ์ใช้งานของบอร์ดนั้น)</p>
+    <button class="btn ghost" id="backup" type="button">สำรองเครื่องเดิม (บันทึกเป็นไฟล์)</button>
+    <label class="btn ghost" style="display:block;text-align:center;margin-top:8px;cursor:pointer">คืนเครื่องเดิมจากไฟล์สำรอง<input type="file" id="restore" accept=".bin" hidden></label>
+    <div class="bar" aria-hidden="true" style="margin-top:12px"><div id="bbar"></div></div>
+    <p id="bstatus" class="muted" style="font-weight:600">พร้อม</p>
+    <div class="box tip">ใช้เวลาประมาณ 2–3 นาที อย่าถอดสาย · ไฟล์สำรองใช้คืนได้กับ<b>บอร์ดตัวเดิมเท่านั้น</b> (ชื่อไฟล์มีเลขบอร์ด) เก็บไฟล์ไว้ให้ดี</div>
+  </section>
+
+  <section class="card">
     <h2>หลังติดตั้ง</h2>
     <ol>
       <li>เปิดครั้งแรก: แตะ + ทั้ง 4 มุม แล้วแตะกล่อง OK เพื่อปรับทัชให้ตรง (ทำครั้งเดียว)</li>
       <li>เสียบ ELM327 ที่ช่อง OBD ของรถ (ส่วนใหญ่อยู่ใต้คอนโซลฝั่งคนขับ) แล้วติดเครื่อง เกจจะค้นหาเองภายใน 10–30 วินาที ป้ายมุมขวาบนเป็น <b>OBD สีเขียว</b> = อ่านค่ารถอยู่</li>
       <li>หาไม่เจอ: แตะ ≡ มุมซ้ายบน › จับคู่ OBD › แตะชื่อ (หรือเลข) ของ ELM327</li>
-      <li>แตะครึ่งขวา/ซ้ายของจอ = เปลี่ยนหน้า · จอไม่เปลี่ยนหน้าเอง</li>
-      <li>ไม่มีรถ: <b>กดค้างปุ่ม BT มุมขวาบน 2 วินาที</b> = โหมดจำลอง ลองดูทุกหน้า (ปิดเปิดเครื่องใหม่ = กลับปกติ)</li>
+      <li>ปัดซ้าย/ขวา หรือแตะขอบซ้าย/ขวาของจอ = เปลี่ยนหน้า · จอไม่เปลี่ยนหน้าเอง</li>
+      <li>แตะช่องค่า 3 ช่องด้านล่างหน้าหลัก = เลือกค่าที่จะแสดง (ค่าที่รถไม่ส่งมาจะไม่อยู่ในรายการ)</li>
+      <li>ไม่มีรถ: <b>กดค้างปุ่ม BT มุมขวาบน 2 วินาที</b> = โหมดจำลอง ทุกค่าเดินเหมือนขับจริง ลองได้ทุกอย่าง ไม่บันทึกอะไร (กดค้างอีกครั้ง หรือปิดเปิดเครื่อง = กลับปกติ)</li>
       <li>ติดบอร์ดกลับหัว: ≡ › หน้า จอ › กลับจอ</li>
       <li>รถคันอื่นที่ไม่ใช่ Civic: ≡ › รถ เลือกเบนซิน/ดีเซล เทอร์โบ รอบสูงสุด ความจุถัง · น้ำมัน › ลิตรตอน E ปรับให้ขีดน้ำมันตรงหน้าปัดรถ</li><li>ราคาน้ำมันจริง นาฬิกา สภาพอากาศ: ≡ › มือถือ › เชื่อมต่อ WiFi (Hotspot มือถือ) ทำตอนเปิดเครื่อง</li>
     </ol>
@@ -153,23 +164,23 @@ footer { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
   <section class="card">
     <h2>มีอะไรบ้าง</h2>
     <ul>
-      <li><b>หน้าหลักนีออน:</b> ความเร็ว (แตะ = รอบ) เข็มรอบ ความร้อนน้ำ น้ำมันในถัง วิ่งได้อีกกี่ กม. แบต</li>
+      <li><b>หน้าหลัก (ใช้ฟรี):</b> ความเร็ว (แตะ = รอบ) เข็มรอบ ความร้อนน้ำ น้ำมันในถัง km/L วิ่งได้อีกกี่ กม. + ช่องค่า 3 ช่องเลือกเองได้ 49 ค่า มีแถบและค่าต่ำ-สูง</li>
       <li><b>มังกรคู่ใจ:</b> ฟักจากไข่ โต 4 ร่างตามระยะที่ขับจริง ขับนุ่มโตเร็ว · เดินทาง 8 สถานที่ แผนที่ + พาสปอร์ต · ตามสภาพอากาศจริง</li>
       <li><b>ระยะทาง:</b> รวมทั้งหมด / ทริป / ตั้งแต่ติดเครื่อง + เวลาขับ · km/L ตอนนี้และเฉลี่ย</li>
       <li><b>ราคาน้ำมันจริง + ค่าน้ำมันเป็นบาท:</b> ทริปนี้กี่บาท บาท/กม. จอดติดเครื่องเสียไปเท่าไร</li>
       <li><b>โค้ดเสียภาษาไทย:</b> อ่าน/ลบโค้ด บอกความหมายและความด่วน 101 โค้ด</li>
       <li><b>เตือนเป็นแถบด้านบน:</b> น้ำร้อน แบตต่ำ/สูง รอบสูง ไฟเช็คเครื่อง นัดเข้าศูนย์ ลืมมือถือ (ตั้งค่าเองได้)</li>
-      <li><b>ข้อมูลทั้งหมด:</b> ทุกค่าที่รถส่งมาในหน้าเดียว · เครื่องยนต์ อุณหภูมิ AFR</li>
+      <li><b>ข้อมูลทั้งหมด:</b> ทุกค่าที่รถส่งมา 2 หน้า · เครื่องยนต์ อุณหภูมิ AFR O2 น้ำมันเครื่อง (ถ้ารถส่งมา) · กราฟย้อนหลังในช่องค่าเปิดได้ เลือกสีได้</li>
     </ul>
     <div class="shots">
-      <figure><img src="img/00_main.jpg" alt="หน้าหลักนีออน: รอบ 710 ความร้อน 91 วิ่งได้อีก 95 km แบต 14.5V" loading="lazy"><figcaption>หน้าหลัก</figcaption></figure>
-      <figure><img src="img/01_pet.jpg" alt="หน้ามังกร: มังกรสีม่วงในป่าต้นกำเนิด ฝนตก" loading="lazy"><figcaption>มังกรคู่ใจ</figcaption></figure>
-      <figure><img src="img/02_fuel.jpg" alt="หน้าน้ำมัน: ระยะรวม ทริป ตั้งแต่ติดเครื่อง เวลาขับ กราฟ 1 นาที" loading="lazy"><figcaption>น้ำมัน / ระยะทาง</figcaption></figure>
-      <figure><img src="img/03_all.jpg" alt="หน้าข้อมูลทั้งหมด 21 ค่าจากรถ" loading="lazy"><figcaption>ข้อมูลทั้งหมด</figcaption></figure>
-      <figure><img src="img/04_engine.jpg" alt="หน้าเครื่องยนต์: สุญญากาศ คันเร่ง โหลด อากาศเข้า จุดระเบิด" loading="lazy"><figcaption>เครื่องยนต์</figcaption></figure>
-      <figure><img src="img/05_alerts.jpg" alt="ตั้งค่าเตือน: น้ำร้อน แบตต่ำ แบตสูง รอบสูง ไฟเช็คเครื่อง" loading="lazy"><figcaption>ตั้งค่าเตือน</figcaption></figure>
+      <figure><img src="img/00_main.jpg" alt="หน้าหลัก: ความเร็ว เข็มรอบ ความร้อนน้ำ น้ำมัน ช่องค่า 3 ช่อง" loading="lazy"><figcaption>หน้าหลัก</figcaption></figure>
+      <figure><img src="img/01_pet.jpg" alt="หน้ามังกร: มังกรสีม่วงนั่งเบาะในรถระหว่างขับ" loading="lazy"><figcaption>มังกรคู่ใจ</figcaption></figure>
+      <figure><img src="img/02_fuel.jpg" alt="หน้าทริป: ระยะทาง เวลาขับ ค่าน้ำมัน km/L กราฟ 1 นาที" loading="lazy"><figcaption>ทริป / ค่าน้ำมัน</figcaption></figure>
+      <figure><img src="img/03_all.jpg" alt="เลือกค่าที่จะแสดง: 12 ค่าต่อหน้า พร้อมแถบและค่าต่ำ-สูง" loading="lazy"><figcaption>เลือกค่าที่จะแสดง</figcaption></figure>
+      <figure><img src="img/04_engine.jpg" alt="หน้าเครื่องยนต์: ความร้อนน้ำ แบต อากาศเข้า โหลดเครื่อง ส่วนผสมน้ำมัน" loading="lazy"><figcaption>เครื่องยนต์</figcaption></figure>
+      <figure><img src="img/05_alerts.jpg" alt="ตั้งค่าเตือน: น้ำร้อน แบตต่ำ แบตสูง รอบสูง ขับเร็วเกิน ไฟเช็คเครื่อง" loading="lazy"><figcaption>ตั้งค่าเตือน</figcaption></figure>
     </div>
-    <p class="muted" style="font-size:14px">ภาพทั้งหมดจับจากจอจริงใน Honda Civic FC 2017</p>
+    <p class="muted" style="font-size:14px">ภาพจับจากจอจริง (ตัวเลขจากโหมดจำลอง) · ทดสอบกับ Honda Civic FC 2017</p>
   </section>
 
   <section class="card">
@@ -193,7 +204,7 @@ footer { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
 
   <footer>
     <p>DRAKO GAUGE · by tee &amp; claude · ทดลอง 15 กม. แล้วปลดล็อก 299 บาท · เกจอ่านค่าอย่างเดียว (ยกเว้นปุ่มลบโค้ดเสีย)</p>
-    <p>หน้านี้นับแค่จำนวนครั้งที่ติดตั้งสำเร็จ (+1) ไม่เก็บข้อมูลใดๆ ของคุณ · ใช้ esptool-js (Apache-2.0) ของ Espressif ดู <a href="mobile/esptool-js/LICENSE">LICENSE</a> · ฟอนต์ในเกจ Orbitron, Exo 2, Chakra Petch, IBM Plex Sans Thai (SIL OFL)</p>
+    <p>หน้านี้นับแค่จำนวนครั้งที่ติดตั้งสำเร็จ (+1) ไม่เก็บข้อมูลใดๆ ของคุณ · ใช้ esptool-js (Apache-2.0) ของ Espressif ดู <a href="mobile/esptool-js/LICENSE">LICENSE</a> · ฟอนต์ในเกจ Barlow Semi Condensed, Orbitron, Exo 2, Chakra Petch, IBM Plex Sans Thai (SIL OFL)</p>
   </footer>
 </main>
 
@@ -222,6 +233,7 @@ if (!navigator.usb && !('serial' in navigator)) {
   $('unsupported').hidden = false;
   $('go').disabled = true;
   $('probe').disabled = true;
+  $('backup').disabled = true;
 }
 
 async function pickPort() {
@@ -292,6 +304,8 @@ $('go').addEventListener('click', async () => {
     const chip = await loader.main();
     log('chip: ' + chip);
     if (loader.chip.CHIP_NAME !== 'ESP32') throw new Error('ไม่ใช่บอร์ด ESP32 รุ่นที่รองรับ: ' + chip);
+    if (await lockedBoard(loader))
+      throw new Error('บอร์ดนี้ถูกล็อกโดยผู้ผลิตโปรแกรมเดิม (เข้ารหัส / secure boot) ลงทับแล้วจะใช้ไม่ได้ จึงไม่ลงให้ ของเดิมยังอยู่ครบ');
 
     status(erase ? 'กำลังล้างเครื่องและเขียนโปรแกรม... อย่าถอดสาย' : 'กำลังเขียนโปรแกรม... อย่าถอดสาย (ค่าตั้งค่าเดิมไม่หาย)');
     const total = files.reduce((a, f) => a + f.data.length, 0);
@@ -304,7 +318,8 @@ $('go').addEventListener('click', async () => {
     status('กำลังเริ่มเครื่องใหม่...');
     await loader.after('hard_reset');
     status('ติดตั้งเสร็จแล้ว ถอดสายได้เลย บอร์ดจะเริ่มเกจเอง', 'ok');
-    fetch('https://abacus.jasoncameron.dev/hit/drako-gauge-flasher/installs').catch(() => {});   // +1 install, nothing about you
+    if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname))  // (tests on the PC are not counted)
+      fetch('https://abacus.jasoncameron.dev/hit/drako-gauge-flasher/installs').catch(() => {});   // +1 install, nothing about you
   } catch (e) {
     console.error(e);
     log('ERROR: ' + (e && e.message ? e.message : e));
@@ -314,6 +329,129 @@ $('go').addEventListener('click', async () => {
   } finally {
     try { if (transport) await transport.disconnect(); else if (port) await port.close(); } catch (e) { /* closed */ }
     $('go').disabled = false;
+  }
+});
+
+// connect the bootloader (the same resets as the installer)
+async function openLoader(port, baud) {
+  const transport = new Transport(port, false);
+  const terminal = { clean() {}, writeLine: log, write: (t) => log(t) };
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const classicReset = (t, delay) => ({
+    reset: async () => {
+      await port.setSignals({ dataTerminalReady: false, requestToSend: true });
+      await sleep(100);
+      await port.setSignals({ dataTerminalReady: true, requestToSend: false });
+      await sleep(delay);
+      await port.setSignals({ dataTerminalReady: false, requestToSend: false });
+    },
+  });
+  const hardReset = () => ({
+    reset: async () => {
+      await port.setSignals({ dataTerminalReady: false, requestToSend: true });
+      await sleep(100);
+      await port.setSignals({ dataTerminalReady: false, requestToSend: false });
+    },
+  });
+  const loader = new ESPLoader({ transport, baudrate: baud, romBaudrate: 115200, terminal, debugLogging: true,
+                                 resetConstructors: { classicReset, hardReset } });
+  const chip = await loader.main();
+  log('chip: ' + chip);
+  if (loader.chip.CHIP_NAME !== 'ESP32') throw new Error('ไม่ใช่บอร์ด ESP32 รุ่นที่รองรับ: ' + chip);
+  const mac = (await loader.chip.readMac(loader)).replace(/:/g, '');
+  return { loader, transport, mac };
+}
+const FLASH = 0x400000;  // the CYD's 4 MB
+// progress of the backup / restore, in its own section (so it never looks stuck)
+const bst = (t, cls = '') => { const e = $('bstatus'); e.textContent = t; e.className = cls || 'muted'; e.style.fontWeight = 600; status(t, cls); };
+const bprog = (what, done, total) => {
+  const f = total ? done / total : 0;
+  $('bbar').style.width = Math.round(f * 100) + '%';
+  bar(f);
+  bst(`${what} ${(done / 1048576).toFixed(1)} / ${(total / 1048576).toFixed(1)} MB (${Math.round(f * 100)}%) อย่าถอดสาย`);
+};
+// a board locked by its maker (flash encryption / secure boot): our firmware would not start on it
+async function lockedBoard(loader) {
+  const r0 = await loader.readReg(0x3ff5a000), r6 = await loader.readReg(0x3ff5a018);  // EFUSE_BLK0_RDATA0 / 6
+  let cnt = (r0 >>> 20) & 0x7f, ones = 0;
+  while (cnt) ones += cnt & 1, cnt >>>= 1;
+  const enc = ones % 2 === 1, sb = (r6 & 0x30) !== 0;
+  log(`efuse: flash encryption ${enc ? 'ON' : 'off'}, secure boot ${sb ? 'ON' : 'off'}`);
+  return enc || sb;
+}
+
+// back up the whole board (any firmware) to a file
+$('backup').addEventListener('click', async () => {
+  const baud = parseInt($('baud').value, 10);
+  let port = null, conn = null;
+  $('backup').disabled = true;
+  bar(0);
+  logEl.textContent = '';
+  try {
+    bst('เลือกบอร์ด...');
+    port = await pickPort();
+    bst('กำลังเชื่อมต่อบอร์ด... (ถ้าค้างนาน กดปุ่ม BOOT ที่บอร์ดค้างไว้)');
+    conn = await openLoader(port, baud);
+    const locked = await lockedBoard(conn.loader);
+    bprog('กำลังอ่านเครื่องเดิม', 0, FLASH);
+    const data = await conn.loader.readFlash(0, FLASH, (pkt, got, total) => bprog('กำลังอ่านเครื่องเดิม', got, total || FLASH));
+    bar(1);
+    const d = new Date(), ymd = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    const name = `cyd-backup-${conn.mac}-${ymd}.bin`;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([data], { type: 'application/octet-stream' }));
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    await conn.loader.after('hard_reset');
+    if (locked) bst('สำรองเสร็จแล้ว: ' + name + ' · แต่บอร์ดนี้ถูกล็อกโดยผู้ผลิตโปรแกรมเดิม ลง DRAKO GAUGE ทับไม่ได้', 'bad');
+    else bst('สำรองเสร็จแล้ว: ' + name + ' (ดูในโฟลเดอร์ดาวน์โหลด) ลง DRAKO GAUGE ต่อได้เลย', 'ok');
+  } catch (e) {
+    console.error(e);
+    log('ERROR: ' + (e && e.message ? e.message : e));
+    bst('สำรองไม่สำเร็จ: ' + (e && e.message ? e.message : e) + ' ลองใหม่ หรือเลือกความเร็ว 115200 ในตั้งค่าขั้นสูง', 'bad');
+  } finally {
+    try { if (conn) await conn.transport.disconnect(); else if (port) await port.close(); } catch (e) { /* closed */ }
+    $('backup').disabled = false;
+  }
+});
+
+// put a backup back (the whole 4 MB, from address 0)
+$('restore').addEventListener('change', async (ev) => {
+  const f = ev.target.files[0];
+  ev.target.value = '';
+  if (!f) return;
+  const data = new Uint8Array(await f.arrayBuffer());
+  if (data.length !== FLASH) { bst('ไฟล์นี้ไม่ใช่ไฟล์สำรองทั้งเครื่อง (ต้องขนาด 4 MB)', 'bad'); return; }
+  if (!window.confirm('คืนเครื่องเดิมจาก ' + f.name + ' ? โปรแกรมที่อยู่ในบอร์ดตอนนี้ (รวมค่าที่ตั้ง) จะถูกแทนที่ทั้งหมด')) return;
+  const baud = parseInt($('baud').value, 10);
+  let port = null, conn = null;
+  bar(0);
+  logEl.textContent = '';
+  try {
+    bst('เลือกบอร์ด...');
+    port = await pickPort();
+    bst('กำลังเชื่อมต่อบอร์ด... (ถ้าค้างนาน กดปุ่ม BOOT ที่บอร์ดค้างไว้)');
+    conn = await openLoader(port, baud);
+    const m = f.name.match(/cyd-backup-([0-9a-f]{12})/i);
+    if (m && m[1].toLowerCase() !== conn.mac.toLowerCase() &&
+        !window.confirm('ไฟล์นี้สำรองจากบอร์ดอื่น (' + m[1] + ') ไม่ใช่บอร์ดนี้ (' + conn.mac + ') สิทธิ์ใช้งานอาจใช้ไม่ได้ ต่อไหม?')) {
+      bst('ยกเลิกแล้ว');
+      return;
+    }
+    bprog('กำลังคืนเครื่องเดิม', 0, FLASH);
+    await conn.loader.writeFlash({ fileArray: [{ data, address: 0 }], flashMode: 'keep', flashFreq: 'keep', flashSize: 'keep',
+                                   eraseAll: false, compress: true, reportProgress: (i, w, n) => bprog('กำลังคืนเครื่องเดิม', w, n) });
+    bar(1);
+    await conn.loader.after('hard_reset');
+    bst('คืนเครื่องเดิมเสร็จแล้ว ถอดสายได้เลย', 'ok');
+  } catch (e) {
+    console.error(e);
+    log('ERROR: ' + (e && e.message ? e.message : e));
+    bst('คืนเครื่องไม่สำเร็จ: ' + (e && e.message ? e.message : e) + ' ลองใหม่ได้ ไฟล์สำรองยังอยู่', 'bad');
+  } finally {
+    try { if (conn) await conn.transport.disconnect(); else if (port) await port.close(); } catch (e) { /* closed */ }
   }
 });
 
