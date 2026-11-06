@@ -146,6 +146,7 @@ footer { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
     <div class="bar" aria-hidden="true" style="margin-top:12px"><div id="bbar"></div></div>
     <p id="bstatus" class="muted" style="font-weight:600">พร้อม</p>
     <div class="box tip">ใช้เวลาประมาณ 2–3 นาที อย่าถอดสาย · ไฟล์สำรองใช้คืนได้กับ<b>บอร์ดตัวเดิมเท่านั้น</b> (ชื่อไฟล์มีเลขบอร์ด) เก็บไฟล์ไว้ให้ดี</div>
+    <div class="box warn">การสำรองและคืนเครื่องมีโอกาสพังได้แม้น้อยมาก <b>ใช้งานโดยยอมรับความเสี่ยงเอง</b></div>
   </section>
 
   <section class="card">
@@ -206,6 +207,7 @@ footer { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
 
   <footer>
     <p>DRAKO GAUGE · by tee &amp; claude · ทดลอง 15 กม. แล้วปลดล็อก 199 บาท (โปรโมชั่น) · เกจอ่านค่าอย่างเดียว (ยกเว้นปุ่มลบโค้ดเสีย)</p>
+    <p>ใช้งานโดยยอมรับความเสี่ยงเอง: ค่าต่างๆ บนเกจใช้ประกอบการขับเท่านั้น ห้ามดูหรือแตะจอระหว่างขับ ผู้พัฒนาไม่รับผิดชอบความเสียหายที่เกิดจากการใช้งาน</p>
     <p>หน้านี้นับแค่จำนวนครั้งที่ติดตั้งสำเร็จ (+1) ไม่เก็บข้อมูลใดๆ ของคุณ · ใช้ esptool-js (Apache-2.0) ของ Espressif ดู <a href="mobile/esptool-js/LICENSE">LICENSE</a> · ฟอนต์ในเกจ Barlow Semi Condensed, Orbitron, Exo 2, Chakra Petch, IBM Plex Sans Thai (SIL OFL)</p>
   </footer>
 </main>
@@ -308,6 +310,12 @@ $('go').addEventListener('click', async () => {
     if (loader.chip.CHIP_NAME !== 'ESP32') throw new Error('ไม่ใช่บอร์ด ESP32 รุ่นที่รองรับ: ' + chip);
     if (await lockedBoard(loader))
       throw new Error('บอร์ดนี้ถูกล็อกโดยผู้ผลิตโปรแกรมเดิม (เข้ารหัส / secure boot) ลงทับแล้วจะใช้ไม่ได้ จึงไม่ลงให้ ของเดิมยังอยู่ครบ');
+    const other = await otherProgram(loader);
+    if (other !== null && !window.confirm('บอร์ดนี้มีโปรแกรมอื่นอยู่' + (other ? ' (' + other + ')' : '') +
+        ' ลงทับแล้วโปรแกรมเดิมอาจใช้ไม่ได้อีก แนะนำกด "สำรองเครื่องเดิม" ก่อน ยอมรับความเสี่ยงและลงทับไหม?')) {
+      status('ยกเลิกแล้ว ของเดิมยังอยู่ครบ');
+      return;
+    }
 
     status(erase ? 'กำลังล้างเครื่องและเขียนโปรแกรม... อย่าถอดสาย' : 'กำลังเขียนโปรแกรม... อย่าถอดสาย (ค่าตั้งค่าเดิมไม่หาย)');
     const total = files.reduce((a, f) => a + f.data.length, 0);
@@ -373,6 +381,27 @@ const bprog = (what, done, total) => {
   bst(`${what} ${(done / 1048576).toFixed(1)} / ${(total / 1048576).toFixed(1)} MB (${Math.round(f * 100)}%) อย่าถอดสาย`);
 };
 // a board locked by its maker (flash encryption / secure boot): our firmware would not start on it
+// another program on the board (not DRAKO GAUGE, not blank)? null = no; else its name ('' when unknown)
+async function otherProgram(loader) {
+  try {
+    const nvs = await loader.readFlash(0x9000, 0x5000);
+    const txt = new TextDecoder('latin1').decode(nvs);
+    if (txt.includes('gauge') && (txt.includes('lic') || txt.includes('trip'))) return null;  // ours (settings / trial)
+    const app = await loader.readFlash(0x10000, 0x100);
+    const blankNvs = nvs.every((b) => b === 0xff), blankApp = app.every((b) => b === 0xff);
+    if (blankNvs && blankApp) return null;  // a blank board
+    let name = '';
+    if (app[0] === 0xe9 && app[32] === 0x32 && app[33] === 0x54 && app[34] === 0xcd && app[35] === 0xab) {  // esp_app_desc
+      name = new TextDecoder('latin1').decode(app.slice(80, 112)).split(String.fromCharCode(0))[0].trim();
+      if (!/^[\x20-\x7e]{2,}$/.test(name) || /arduino-lib-builder/i.test(name)) name = '';
+    }
+    log('other program: ' + (name || '(unknown)'));
+    return name;
+  } catch (e) {
+    log('program check skipped: ' + (e && e.message ? e.message : e));
+    return null;  // (a failed check never blocks the install)
+  }
+}
 async function lockedBoard(loader) {
   const r0 = await loader.readReg(0x3ff5a000), r6 = await loader.readReg(0x3ff5a018);  // EFUSE_BLK0_RDATA0 / 6
   let cnt = (r0 >>> 20) & 0x7f, ones = 0;
@@ -392,6 +421,10 @@ $('backup').addEventListener('click', async () => {
   try {
     bst('เลือกบอร์ด...');
     port = await pickPort();
+    if (!window.confirm('สำรองเครื่องเดิมเป็นไฟล์ มีโอกาสพังได้แม้น้อยมาก ยอมรับความเสี่ยงไหม?')) {
+      bst('ยกเลิกแล้ว');
+      return;
+    }
     bst('กำลังเชื่อมต่อบอร์ด... (ถ้าค้างนาน กดปุ่ม BOOT ที่บอร์ดค้างไว้)');
     conn = await openLoader(port, baud);
     const locked = await lockedBoard(conn.loader);
@@ -444,7 +477,7 @@ $('restorego').addEventListener('click', async () => {
   try {
     bst('เลือกบอร์ด...');
     port = await pickPort();  // (first: right after the press)
-    if (!window.confirm('คืนเครื่องเดิมจาก ' + name + ' ? โปรแกรมที่อยู่ในบอร์ดตอนนี้ (รวมค่าที่ตั้ง) จะถูกแทนที่ทั้งหมด')) {
+    if (!window.confirm('คืนเครื่องเดิมจาก ' + name + ' ? โปรแกรมที่อยู่ในบอร์ดตอนนี้ (รวมค่าที่ตั้ง) จะถูกแทนที่ทั้งหมด · มีโอกาสพังได้แม้น้อยมาก ยอมรับความเสี่ยงไหม?')) {
       bst('ยกเลิกแล้ว');
       return;
     }
