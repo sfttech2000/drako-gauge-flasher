@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>คู่มือ DRAKO GAUGE</title>
+<meta name="description" content="คู่มือการใช้งาน DRAKO GAUGE เกจวัดรถยนต์ OBD2 บนจอ CYD พร้อมภาพจากจอจริง">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #eef3f6; --paper: #fff; --ink: #121a21; --muted: #55656f; --line: #d2dde4;
+  --accent: #0b7fa3; --sun: #d96f00; --warn-bg: #fdf1e2; --tip-bg: #e2f2f7;
+  --display: "Bai Jamjuree", "IBM Plex Sans Thai", "Leelawadee UI", Tahoma, sans-serif;
+  --body: "IBM Plex Sans Thai", "Leelawadee UI", Tahoma, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #05090d; --paper: #0c141b; --ink: #e6eef3; --muted: #8c9eaa; --line: #1c2a35;
+          --accent: #22d3ee; --sun: #ff9a1f; --warn-bg: #2a1c0b; --tip-bg: #0b222c; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16.5px/1.75 var(--body);
+       padding: 0 max(16px, env(safe-area-inset-right)) 48px max(16px, env(safe-area-inset-left)); }
+main { max-width: 720px; margin: 0 auto; display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+header { padding-top: 28px; display: grid; gap: 8px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.3; margin: 0; }
+h1 { font-size: clamp(26px, 7vw, 34px); }
+h1 span { color: var(--sun); }
+h2 { font-size: 20px; }
+h3 { font-size: 16.5px; margin-top: 4px; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; display: grid; gap: 12px; }
+ol, ul { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
+figure { margin: 0; }
+figure img { width: 100%; display: block; border-radius: 10px; border: 1px solid var(--line); image-rendering: pixelated; background: #000; }
+figcaption { font-size: 13.5px; color: var(--muted); padding-top: 4px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 520px) { .two { grid-template-columns: 1fr; } }
+.box { border-radius: 10px; padding: 12px 14px; }
+.warn { background: var(--warn-bg); }
+.tip { background: var(--tip-bg); }
+.toc { display: flex; flex-wrap: wrap; gap: 6px; }
+.toc a { font-size: 14px; padding: 3px 10px; border-radius: 999px; background: var(--tip-bg); color: var(--accent); text-decoration: none; }
+a { color: var(--accent); }
+b.k { color: var(--accent); }
+li, p { overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="muted"><a href="./">‹ หน้าติดตั้ง</a></p>
+    <h1>คู่มือ <span>DRAKO GAUGE</span></h1>
+    <p class="muted">ภาพทั้งหมดจับจากจอจริงใน Honda Civic FC 2017 ระหว่างขับทดสอบ</p>
+    <nav class="toc">
+      <a href="#start">เริ่มใช้</a><a href="#main">หน้าหลัก</a><a href="#pages">หน้าอื่นๆ</a><a href="#values">เลือกค่า</a>
+      <a href="#fuel">เกจน้ำมัน</a><a href="#pet">มังกร</a><a href="#settings">ตั้งค่า</a><a href="#unlock">ปลดล็อก</a><a href="#help">ปัญหาที่พบบ่อย</a>
+    </nav>
+  </header>
+
+  <div class="box warn"><b>ห้ามดูหรือแตะจอระหว่างขับ</b> ตั้งค่าทุกอย่างตอนจอด · เกจอ่านค่าจากรถอย่างเดียว ไม่เขียนอะไรลงรถ (ยกเว้นตอนกดลบโค้ดเสียเอง)</div>
+
+  <section class="card" id="start">
+    <h2>1. เริ่มใช้</h2>
+    <ol>
+      <li><b>ติดตั้ง:</b> ที่หน้าติดตั้ง เสียบบอร์ดกับคอมหรือมือถือ Android แล้วกด "เชื่อมต่อบอร์ดและติดตั้ง" ประมาณ 1–2 นาที</li>
+      <li><b>ตั้งทัช (ครั้งแรกครั้งเดียว):</b> แตะกลางเครื่องหมาย + ทั้ง 4 จุด แล้วแตะ OK · อยากตั้งใหม่: ตอนเปิดเครื่องแตะภาพโลโก้ค้างไว้</li>
+      <li><b>ต่อรถ:</b> เสียบ ELM327 Bluetooth ที่ช่อง OBD (ใต้คอนโซลฝั่งคนขับ) ติดเครื่องรถ เกจหาเองภายใน 10–30 วินาที ปุ่มมุมขวาบนเป็น <b>OBD สีเขียว</b> = อ่านค่ารถอยู่</li>
+      <li><b>หาไม่เจอ:</b> แตะ ≡ มุมซ้ายบน › จับคู่ OBD › แตะชื่อ ELM327 (รหัส 1234)</li>
+      <li><b>ไม่มีรถ อยากลองดู:</b> กดปุ่ม OBD มุมขวาบนค้าง 2 วินาที = <b>โหมดจำลอง</b> ทุกค่าเดินเหมือนขับจริง ไม่บันทึกอะไร กดค้างอีกครั้งเพื่อออก</li>
+    </ol>
+  </section>
+
+  <section class="card" id="main">
+    <h2>2. หน้าหลัก</h2>
+    <figure><img src="img/guide/main.jpg" alt="หน้าหลัก: ความเร็วตรงกลาง เข็มรอบ เกจความร้อนซ้าย เกจน้ำมันขวา ช่องค่า 3 ช่องด้านล่าง" loading="lazy"><figcaption>หน้าหลัก (ใช้ได้ตลอดแม้ยังไม่ปลดล็อก)</figcaption></figure>
+    <ul>
+      <li><b>ตรงกลาง:</b> ความเร็ว km/h · แตะกลางจอ = สลับเป็นรอบเครื่อง</li>
+      <li><b>วงนอก:</b> เข็มรอบเครื่อง 0–8 (ดีเซล 0–5) ช่วงสีแดง = รอบสูง</li>
+      <li><b>ซ้าย C–H:</b> ความร้อนน้ำ ขีดกลาง = 100°C (ตัวเลขจริงอยู่มุมซ้ายบน)</li>
+      <li><b>ขวา E–F:</b> น้ำมันในถัง เป็นสีแดงเมื่อเหลือ 2 ขีดสุดท้ายหรือต่ำกว่าที่ตั้งเตือน</li>
+      <li><b>ใต้ความเร็ว:</b> วิ่งได้อีกกี่ กม. และแถบ km/L ตอนนี้ (0–40) · น้ำมันใกล้หมดจะขึ้น "น้ำมันใกล้หมด" แทน</li>
+      <li><b>3 ช่องล่าง:</b> แตะช่อง = เลือกค่าที่จะแสดง มีค่าต่ำ–สูงตั้งแต่เปิดเครื่อง</li>
+      <li><b>แถบบน:</b> สภาพอากาศ นาฬิกา และราคาน้ำมันวันนี้ (หลังเชื่อม Hotspot มือถือ)</li>
+      <li><b>แจ้งเตือน:</b> ขึ้นเป็นแถบด้านบนเท่านั้น แตะแถบ = ปิด · จอไม่เปลี่ยนหน้าเอง</li>
+    </ul>
+  </section>
+
+  <section class="card" id="pages">
+    <h2>3. หน้าอื่นๆ</h2>
+    <p><b>เปลี่ยนหน้า:</b> ปัดซ้าย/ขวา หรือแตะขอบซ้าย/ขวาของจอ · <b>ปรับความสว่าง:</b> ปัดขึ้น/ลง</p>
+    <div class="two">
+      <figure><img src="img/guide/trip.jpg" alt="หน้าทริป" loading="lazy"><figcaption><b>ทริป:</b> ระยะ เวลาขับ ค่าน้ำมันเป็นบาท km/L ตอนนี้และเฉลี่ย ใช้น้ำมันกี่ลิตร บาท/กม. จอดติดเครื่องเสียไปเท่าไร · ปุ่มล้างทริป (แตะ 2 ครั้ง)</figcaption></figure>
+      <figure><img src="img/guide/engine.jpg" alt="หน้าเครื่องยนต์" loading="lazy"><figcaption><b>เครื่องยนต์:</b> ความร้อนน้ำ แบต/ไดชาร์จ อากาศเข้า โหลดเครื่อง พร้อมสถานะ และส่วนผสมน้ำมัน หนา–บาง</figcaption></figure>
+      <figure><img src="img/guide/drive.jpg" alt="หน้าการขับ" loading="lazy"><figcaption><b>การขับ:</b> เท้าขวาตอนนี้ (ประหยัด–กดหนัก) คะแนนขับ ทริปนี้เร็วสุด รอบสูงสุด เร่งแรง เบรกแรง</figcaption></figure>
+      <figure><img src="img/guide/graph.jpg" alt="หน้ากราฟ" loading="lazy"><figcaption><b>กราฟ:</b> 1 นาทีล่าสุด แตะเลือก รอบ / ความเร็ว / ความร้อนน้ำ / แบต</figcaption></figure>
+      <figure><img src="img/guide/health.jpg" alt="หน้าสุขภาพรถ" loading="lazy"><figcaption><b>สุขภาพรถ:</b> ไฟเช็คเครื่อง อ่าน/ลบโค้ดเสีย (แปลไทย บอกความด่วน) เปลี่ยนน้ำมันเครื่อง นัดเข้าศูนย์</figcaption></figure>
+      <figure><img src="img/guide/all1.jpg" alt="หน้าข้อมูลทั้งหมด" loading="lazy"><figcaption><b>ข้อมูลทั้งหมด (2 หน้า):</b> ทุกค่าที่รถส่งมา "--" = รถคันนี้ไม่ส่งค่านั้น</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="card" id="values">
+    <h2>4. เลือกค่าที่จะแสดง (3 ช่องล่างหน้าหลัก)</h2>
+    <figure><img src="img/guide/picker.jpg" alt="หน้าเลือกค่า 12 ช่องต่อหน้า" loading="lazy"><figcaption>แตะช่องที่ต้องการ · กรอบสว่าง = ค่าที่แสดงอยู่ · ‹ › เปลี่ยนหน้า</figcaption></figure>
+    <ul>
+      <li>แต่ละช่องมีชื่อ แถบเล็ก (ค่าตอนนี้บนสเกลของมัน) ค่าต่ำ–สูง และตัวเลข</li>
+      <li>เลือกค่าที่อยู่อีกช่องแล้ว = สองช่องสลับที่กัน (ไม่มีค่าซ้ำ)</li>
+      <li>ค่าที่รถคันนั้นไม่ส่งมา จะไม่อยู่ในรายการ (หลังต่อรถแล้ว)</li>
+      <li>กราฟเส้นย้อนหลังในช่อง: ≡ › จอ › กราฟในช่องค่า (ปิดอยู่ เปิดได้ เลือกสีได้)</li>
+    </ul>
+  </section>
+
+  <section class="card" id="fuel">
+    <h2>5. เกจน้ำมัน ทำงานยังไง</h2>
+    <p>ค่าที่รถส่งมาคือตำแหน่งลูกลอยในถัง ซึ่งแกว่งตอนขับและเพี้ยนตอนจอดเอียง เกจจึงคิดเอง:</p>
+    <ul>
+      <li><b>ระหว่างขับ:</b> ลดตามน้ำมันที่เครื่องเผาจริง ไม่กระโดดตามน้ำมันกระฉอก</li>
+      <li><b>ตอนจอดนิ่ง / เปิดเครื่อง:</b> ตรวจกับค่าของรถ รับเฉพาะค่าที่ต่ำลง (น้ำมันเพิ่มเองไม่ได้นอกจากเติม)</li>
+      <li><b>เติมน้ำมัน:</b> จอดแล้วค่าขึ้นชัดเจน = เติม ขึ้นแถบ "เติมน้ำมัน +x L ~y B"</li>
+      <li><b>เรียนรู้ถังรถคุณเอง:</b> ถังรถแต่ละรุ่นรูปทรงไม่เหมือนกัน เกจเทียบน้ำมันที่เผากับลูกลอยทุกครั้งที่จอด ยิ่งขับยิ่งแม่น (ประมาณ 1 ถัง) ไม่ต้องตั้งอะไร</li>
+      <li><b>ให้ตรงหน้าปัดรถ:</b> ≡ › น้ำมันและศูนย์ › "น้ำมันที่ขีด E" (ปกติ 0) และ "เตือนน้ำมันต่ำ" (% ของเกจ) · ตั้งความจุถังที่ ≡ › รถ</li>
+      <li><b>น้ำมันใกล้หมด:</b> ขึ้น "น้ำมันใกล้หมด" แทนระยะวิ่งได้อีก เติมแล้วกลับเป็นปกติเอง</li>
+    </ul>
+    <div class="box tip">ค่าน้ำมัน ระยะวิ่งได้อีก เป็นการคำนวณ ใช้ประกอบเท่านั้น · km/L ไม่ตรงกับที่วัดเอง ปรับได้ที่ ≡ › รถ › แก้ km/L</div>
+  </section>
+
+  <section class="card" id="pet">
+    <h2>6. มังกรคู่ใจ</h2>
+    <figure><img src="img/guide/pet.jpg" alt="หน้ามังกร: มังกรสีม่วงในป่า" loading="lazy"><figcaption>หน้าสุดท้าย (ปัดซ้ายจากหน้าหลัก)</figcaption></figure>
+    <ul>
+      <li>ฟักจากไข่ โต 4 ร่างตามระยะที่ขับจริง · ขับนุ่ม ประหยัด = โตเร็วขึ้น 2 เท่า</li>
+      <li>เดินทาง 8 สถานที่ตามระยะรวม · แตะกล่องล่าง = แผนที่ › พาสปอร์ต · แตะชื่อ = ตั้งชื่อ</li>
+      <li>ตามสภาพอากาศจริง (ฝน พายุ กลางคืน) · ระหว่างขับมังกรนั่งคาดเข็มขัดในรถ</li>
+    </ul>
+  </section>
+
+  <section class="card" id="settings">
+    <h2>7. ตั้งค่า (≡ มุมซ้ายบน) 6 หน้า</h2>
+    <p class="muted">ปุ่ม "หน้า ▶" = หน้าถัดไป · กดปุ่ม − / + ค้าง = เปลี่ยนเร็ว · ปุ่มล่าง: จับคู่ OBD, ล้างทริป, แจ้งปัญหา, กลับ</p>
+    <div class="two">
+      <figure><img src="img/guide/set_car.jpg" alt="ตั้งค่ารถ" loading="lazy"><figcaption><b>1 รถ:</b> เบนซิน/ดีเซล เทอร์โบ แก้ความเร็ว (ให้ตรงหน้าปัด ±10%) ความจุเครื่อง แก้ km/L ความจุถัง</figcaption></figure>
+      <figure><img src="img/guide/set_fuel.jpg" alt="ตั้งค่าน้ำมันและศูนย์" loading="lazy"><figcaption><b>2 น้ำมันและศูนย์:</b> ราคาน้ำมัน บวกจากราคากลาง (ราคาปั๊มแถวบ้าน ทีละ 0.01) น้ำมันที่ขีด E เตือนน้ำมันต่ำ นัดศูนย์ ตารางเปลี่ยน</figcaption></figure>
+      <figure><img src="img/guide/set_phone.jpg" alt="ตั้งค่ามือถือ" loading="lazy"><figcaption><b>3 มือถือ:</b> เตือนลืมมือถือ เชื่อมต่อ WiFi (Hotspot มือถือ: เวลา ราคาน้ำมันวันนี้ อากาศ ตอนเปิดเครื่อง) ตำแหน่งสภาพอากาศ</figcaption></figure>
+      <figure><img src="img/guide/set_alerts.jpg" alt="ตั้งค่าเตือน" loading="lazy"><figcaption><b>4 เตือน:</b> น้ำร้อน แบตต่ำ/สูง รอบสูง ขับเร็วเกิน ไฟเช็คเครื่อง (ปิดได้ทุกอย่าง)</figcaption></figure>
+      <figure><img src="img/guide/set_screen.jpg" alt="ตั้งค่าจอ" loading="lazy"><figcaption><b>5 จอ:</b> ความสว่าง (แมนนวล/ออโต้ สอนได้) กลับจอ โหมดจำลอง กราฟในช่องค่า รหัสปลดล็อก</figcaption></figure>
+      <figure><img src="img/guide/set_obd.jpg" alt="ตั้งค่าการอ่านค่ารถ" loading="lazy"><figcaption><b>6 การอ่านค่ารถ:</b> ความไวความเร็ว/รอบ (สูง = ตามรถไว ค่าอื่นช้าลง) และวัดให้ดูว่าความเร็วอัปเดตกี่ครั้ง/วินาที</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="card" id="unlock">
+    <h2>8. ทดลองและปลดล็อก</h2>
+    <ul>
+      <li>ทุกอย่างลองฟรี 15 กม. (ขับจริง) ครบแล้วเปิดเครื่องครั้งถัดไป: <b>หน้าหลักยังใช้ฟรีตลอด</b> (เลือก 3 ช่องค่าได้)</li>
+      <li>หน้าอื่น มังกร และฟังก์ชันมือถือ ต้องปลดล็อก: แตะ<b>รูปแม่กุญแจ</b>บนหน้าหลัก (หรือ ≡ › จอ › รหัสปลดล็อก)</li>
+      <li>ส่งเลขเครื่อง <b>DKG-xxxxxx</b> ที่ขึ้นบนจอ มาทาง LINE ได้รหัส 6 หลัก ใช้ได้ตลอด · ลงใหม่/ล้างเครื่องใช้รหัสเดิม (ใช้กับบอร์ดอื่นไม่ได้)</li>
+      <li>ข้อมูล (ทริป มังกร ค่าที่ตั้ง) ผูกกับบอร์ด: ไฟล์สำรองเอาไปคืนบนบอร์ดอื่นจะเริ่มใหม่</li>
+    </ul>
+  </section>
+
+  <section class="card" id="help">
+    <h2>9. ปัญหาที่พบบ่อย</h2>
+    <h3>ต่อรถไม่ได้ / OBD ไม่เขียว</h3>
+    <p>ติดเครื่องรถก่อน · ใช้ ELM327 แบบ Bluetooth ธรรมดา (แบบ WiFi และ BLE ใช้ไม่ได้) · ≡ › จับคู่ OBD แล้วเลือกใหม่ · ปิดแอป OBD ในมือถือที่อาจแย่งต่อ</p>
+    <h3>ค่าบางช่องขึ้น "--"</h3>
+    <p>รถคันนั้นไม่ส่งค่านั้นมา (แต่ละรุ่นส่งไม่เท่ากัน) ไม่ใช่เกจเสีย</p>
+    <h3>ความเร็วไม่ตรงหน้าปัด</h3>
+    <p>หน้าปัดรถส่วนใหญ่โชว์เกินจริง 3–10% เกจโชว์ความเร็วจริงจากกล่อง ปรับให้ตรงหน้าปัดได้ที่ ≡ › รถ › แก้ความเร็ว</p>
+    <h3>น้ำมันไม่ตรงหน้าปัด</h3>
+    <p>ขับไปสักพักเกจจะเรียนรู้ถังเอง · ปรับ "น้ำมันที่ขีด E" และความจุถังให้ตรงรถ · ถ้ายังไม่ตรง ส่งรูปหน้าปัดรถกับจอเกจมาทาง LINE</p>
+    <h3>ไม่มีนาฬิกา / ราคาน้ำมันไม่อัปเดต</h3>
+    <p>ตั้ง Hotspot มือถือที่ ≡ › มือถือ › เชื่อมต่อ WiFi แล้วเปิด Hotspot ไว้ตอนติดเครื่อง (เกจเชื่อมแป๊บเดียวแล้วรีสตาร์ทเอง)</p>
+    <h3>ทัชไม่ตรง</h3>
+    <p>ปิดเปิดเครื่อง แล้วแตะภาพโลโก้ค้างไว้ตอนเปิด = ตั้งทัชใหม่</p>
+    <div class="box tip">ติดต่อ / แจ้งปัญหา: LINE ที่หน้าติดตั้ง · ส่งรุ่นรถ ปี อาการ และรูปหน้า ≡ › แจ้งปัญหา บนเกจ</div>
+  </section>
+
+  <p class="muted" style="text-align:center">DRAKO GAUGE · by tee &amp; claude</p>
+</main>
+</body>
+</html>
