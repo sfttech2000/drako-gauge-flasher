@@ -1,6 +1,6 @@
 {
   "name": "DRAKO GAUGE",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "builds": [
     {
       "chipFamily": "ESP32",
