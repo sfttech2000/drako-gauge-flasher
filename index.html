@@ -79,6 +79,11 @@ a { color: var(--accent); }
 .contact img { width: 150px; height: 150px; border-radius: 10px; background: #fff; display: block; }
 li, p { overflow-wrap: anywhere; }
 footer { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
+.buy { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; align-items: center; text-decoration: none; color: inherit; }
+.buy img { width: 120px; height: 120px; border-radius: 10px; border: 1px solid var(--line, #d3e2ec); display: block; }
+.buy b { font-family: var(--display); font-size: 17px; }
+.buy .go { display: inline-block; margin-top: 6px; background: #ee4d2d; color: #fff; font-weight: 600; padding: 8px 14px; border-radius: 10px; }
+.buy small { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -103,6 +108,13 @@ footer { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
       <li>รถที่มีช่อง OBD2 (ส่วนใหญ่รถเก๋ง/กระบะตั้งแต่ประมาณปี 2008)</li>
       <li>ไฟเลี้ยงบอร์ดในรถ: สาย USB จากที่ชาร์จในรถ หรือพาวเวอร์แบงก์</li>
     </ul>
+  </section>
+
+  <section class="card">
+    <a class="buy" href="https://s.shopee.co.th/6q2LUfYbIR" target="_blank" rel="noopener sponsored">
+      <img src="img/buy_cyd.jpg" alt="บอร์ด ESP32 จอ 2.8 นิ้ว (CYD) สีเหลือง" width="120" height="120" loading="lazy">
+      <span><b>ยังไม่มีจอ?</b><br>ซื้อได้จากลิงก์นี้ ใช้ได้ตรงรุ่น ไม่ต้องลุ้น<br><span class="go">ซื้อบน Shopee ›</span><small>ลิงก์นายหน้า: ซื้อผ่านลิงก์นี้ช่วยสนับสนุนผู้สร้าง</small></span>
+    </a>
   </section>
 
   <section class="card">
