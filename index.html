@@ -337,11 +337,14 @@ $('go').addEventListener('click', async () => {
       reportProgress: (i, written, size) => bar((before[i] + written) / total),
     });
     bar(1);
-    status('กำลังเริ่มเครื่องใหม่...');
-    await loader.after('hard_reset');
-    status('ติดตั้งเสร็จแล้ว ถอดสายได้เลย บอร์ดจะเริ่มเกจเอง', 'ok');
-    if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname))  // (tests on the PC are not counted)
+    // +1 install, nothing about you: counted once the program is written (the restart below can fail on some
+    // boards / phones although the board is fine)
+    if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {  // (tests on the PC are not counted)
       fetch('https://sft-count.sft-unlock.workers.dev/hit/drako-gauge-flasher/installs').catch(() => {}); fetch('https://abacus.jasoncameron.dev/hit/drako-gauge-flasher/installs').catch(() => {});   // +1 install, nothing about you
+    }
+    status('กำลังเริ่มเครื่องใหม่...');
+    try { await loader.after('hard_reset'); } catch (e) { log('reset: ' + (e && e.message ? e.message : e)); }
+    status('ติดตั้งเสร็จแล้ว ถอดสายได้เลย บอร์ดจะเริ่มเกจเอง', 'ok');
   } catch (e) {
     console.error(e);
     log('ERROR: ' + (e && e.message ? e.message : e));
